@@ -104,6 +104,8 @@ open class LightboxController: UIViewController {
   open var numberOfPages: Int {
     return pageViews.count
   }
+    
+    open var slideToDismiss: Bool = true
 
   open var dynamicBackground: Bool = false {
     didSet {
