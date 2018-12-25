@@ -1,5 +1,6 @@
 import UIKit
 
+
 class LightboxTransition: UIPercentDrivenInteractiveTransition {
 
   lazy var panGestureRecognizer: UIPanGestureRecognizer = { [unowned self] in
