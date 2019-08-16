@@ -14,6 +14,7 @@ public protocol LightboxControllerDismissalDelegate: class {
 public protocol LightboxControllerTouchDelegate: class {
 
   func lightboxController(_ controller: LightboxController, didTouch image: LightboxImage, at index: Int)
+func lightBoxController(_ controller: LightboxController, needEdit image: LightboxImage, at index: Int)
 }
 
 open class LightboxController: UIViewController {
@@ -384,6 +385,10 @@ extension LightboxController: PageViewDelegate {
 
 extension LightboxController: HeaderViewDelegate {
 
+    func headerView(_ headerView: HeaderView, didPressEditButton editButton: UIButton) {
+        imageTouchDelegate?.lightBoxController(self, needEdit: self.images[self.currentPage], at: currentPage)
+    }
+    
   func headerView(_ headerView: HeaderView, didPressDeleteButton deleteButton: UIButton) {
     deleteButton.isEnabled = false
 
