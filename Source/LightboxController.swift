@@ -106,8 +106,10 @@ open class LightboxController: UIViewController {
     return pageViews.count
   }
     
-    open var slideToDismiss: Bool = true
-
+  open var slideToDismiss: Bool = true
+    
+  open var imageOffset: CGFloat = 0
+    
   open var dynamicBackground: Bool = false {
     didSet {
       if dynamicBackground == true {
@@ -235,6 +237,7 @@ open class LightboxController: UIViewController {
 
     for image in images {
       let pageView = PageView(image: image)
+      pageView.imageOffset = self.imageOffset 
       pageView.pageViewDelegate = self
 
       scrollView.addSubview(pageView)
