@@ -140,7 +140,7 @@ class PageView: UIScrollView {
 
     let imageViewSize = imageView.frame.size
     let imageSize = image.size
-    let realImageViewSize: CGSize
+    var realImageViewSize: CGSize
 
     if imageSize.width / imageSize.height > imageViewSize.width / imageViewSize.height {
       realImageViewSize = CGSize(
