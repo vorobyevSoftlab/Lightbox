@@ -35,6 +35,7 @@ class PageView: UIScrollView {
 
   lazy var loadingIndicator: UIView = LightboxConfig.makeLoadingIndicator()
 
+  var imageOffset: CGFloat = 0
   var image: LightboxImage
   var contentFrame = CGRect.zero
   weak var pageViewDelegate: PageViewDelegate?
@@ -157,7 +158,7 @@ class PageView: UIScrollView {
 
     let imageViewSize = imageView.frame.size
     let imageSize = image.size
-    let realImageViewSize: CGSize
+    var realImageViewSize: CGSize
 
     if imageSize.width / imageSize.height > imageViewSize.width / imageViewSize.height {
       realImageViewSize = CGSize(
@@ -167,6 +168,17 @@ class PageView: UIScrollView {
       realImageViewSize = CGSize(
         width: imageViewSize.height / imageSize.height * imageSize.width,
         height: imageViewSize.height)
+    }
+
+    let maxHeight = contentFrame.height - (imageOffset * 2 )
+    if realImageViewSize.height > 0 && realImageViewSize.width > 0 {
+        if realImageViewSize.height >= maxHeight {
+            let aspectRatio = realImageViewSize.height/realImageViewSize.width
+            realImageViewSize = CGSize(
+                width: maxHeight/aspectRatio,
+                height: maxHeight
+            )
+        }
     }
 
     imageView.frame = CGRect(origin: CGPoint.zero, size: realImageViewSize)

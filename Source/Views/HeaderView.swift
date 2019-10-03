@@ -3,6 +3,8 @@ import UIKit
 protocol HeaderViewDelegate: class {
   func headerView(_ headerView: HeaderView, didPressDeleteButton deleteButton: UIButton)
   func headerView(_ headerView: HeaderView, didPressCloseButton closeButton: UIButton)
+  func headerView(_ headerView: HeaderView, didPressEditButton editButton: UIButton)
+
 }
 
 open class HeaderView: UIView {
@@ -59,6 +61,26 @@ open class HeaderView: UIView {
 
     return button
   }()
+    
+    open fileprivate(set) lazy var editButton: UIButton = { [unowned self] in
+        let title = NSAttributedString(
+            string: LightboxConfig.EditButton.text,
+            attributes: LightboxConfig.EditButton.textAttributes)
+        
+        let button = UIButton(type: .system)
+        
+        button.setAttributedTitle(title, for: UIControlState())
+        button.sizeToFit()
+        
+        button.addTarget(self, action: #selector(editButtonDidPress(_:)),
+                         for: .touchUpInside)
+        
+        button.isHidden = !LightboxConfig.EditButton.enabled
+        
+        return button
+        
+        }()
+
 
   weak var delegate: HeaderViewDelegate?
 
@@ -69,7 +91,8 @@ open class HeaderView: UIView {
 
     backgroundColor = UIColor.clear
 
-    [closeButton, deleteButton].forEach { addSubview($0) }
+    [closeButton, deleteButton, editButton].forEach { addSubview($0) }
+
   }
 
   public required init?(coder aDecoder: NSCoder) {
@@ -85,6 +108,11 @@ open class HeaderView: UIView {
   @objc func closeButtonDidPress(_ button: UIButton) {
     delegate?.headerView(self, didPressCloseButton: button)
   }
+    
+    @objc func editButtonDidPress(_ button: UIButton) {
+        delegate?.headerView(self, didPressEditButton: button)
+    }
+
 }
 
 // MARK: - LayoutConfigurable

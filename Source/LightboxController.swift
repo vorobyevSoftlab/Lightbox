@@ -13,6 +13,8 @@ public protocol LightboxControllerDismissalDelegate: class {
 public protocol LightboxControllerTouchDelegate: class {
     
     func lightboxController(_ controller: LightboxController, didTouch image: LightboxImage, at index: Int)
+    func lightBoxController(_ controller: LightboxController, needEdit image: LightboxImage, at index: Int)
+
 }
 
 open class LightboxController: UIViewController {
@@ -107,6 +109,9 @@ open class LightboxController: UIViewController {
     }
     
     open var slideToDissmiss: Bool = true
+    
+    open var imageOffset: CGFloat = 0
+
     
     open var dynamicBackground: Bool = false {
         didSet {
@@ -237,6 +242,7 @@ open class LightboxController: UIViewController {
         
         for i in 0..<images.count {
             let pageView = PageView(image: preloadIndicies.contains(i) ? images[i] : LightboxImageStub())
+            pageView.imageOffset = self.imageOffset
             pageView.pageViewDelegate = self
             
             scrollView.addSubview(pageView)
@@ -446,6 +452,11 @@ extension LightboxController: HeaderViewDelegate {
             deleteButton.isEnabled = true
         }
     }
+    
+    func headerView(_ headerView: HeaderView, didPressEditButton editButton: UIButton) {
+        imageTouchDelegate?.lightBoxController(self, needEdit: self.images[self.currentPage], at: currentPage)
+    }
+
     
     func headerView(_ headerView: HeaderView, didPressCloseButton closeButton: UIButton) {
         closeButton.isEnabled = false
