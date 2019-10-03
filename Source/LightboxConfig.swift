@@ -77,7 +77,7 @@ public class LightboxConfig {
         public static var enabled = false
         public static var text = NSLocalizedString("Edit", comment: "")
         
-        public static var textAttributes: [NSAttributedStringKey: Any] = [
+        public static var textAttributes: [NSAttributedString.Key: Any] = [
             .font: UIFont.boldSystemFont(ofSize: 16),
             .foregroundColor: UIColor.white,
             .paragraphStyle: {
