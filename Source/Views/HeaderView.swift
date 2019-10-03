@@ -69,7 +69,7 @@ open class HeaderView: UIView {
         
         let button = UIButton(type: .system)
         
-        button.setAttributedTitle(title, for: UIControlState())
+        button.setAttributedTitle(title, for: UIControl.State())
         button.sizeToFit()
         
         button.addTarget(self, action: #selector(editButtonDidPress(_:)),
